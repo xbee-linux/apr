@@ -13,21 +13,20 @@ description: |
 
 
 
-in:
-  version: "1.7.0"
+var:
+  version: 1.7.4
 
 
 provision:
   - url:
-      from: https://archive.apache.org/dist/apr/apr-{% version %}.tar.bz2
-      todir: "{% xbeeSrc %}"
+      from: https://archive.apache.org/dist/apr/apr-{{ .version }}.tar.bz2
+      todir: "{{ .xbee.src }}"
 
 build:
   - shell:
       cmds:
-        - "{{ .resources }}/security_issue.sh"
         - ./configure --prefix=/usr --disable-static --with-installbuilddir=/usr/share/apr-1/build
         - make
-        - make install DESTDIR={% xbeeOut %}
-      directory: "{% xbeeSrc %}/apr-{% version %}"
+        - make install DESTDIR={{ .xbee.out }}
+      directory: "{{ .xbee.src }}/apr-{{ .version }}"
 
